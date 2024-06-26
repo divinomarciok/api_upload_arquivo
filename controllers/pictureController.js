@@ -32,7 +32,7 @@ exports.findAll = async (req,res) =>{
   }
 };
 
-exports.remove = async (req,res) =>{
+exports.apagar = async (req,res) =>{
   try {
 
     const picture = await Picture.findById(req.params.id);
@@ -41,14 +41,13 @@ exports.remove = async (req,res) =>{
       return res.status(404).json({message: "imagem não encontrada"});
     }
 
-    await picture.remove()
-
-    //fs.unlinkSync(pictures.src);
-
-   // await pictures.remove();
+  await picture.deleteOne({id:picture.id})
+  fs.unlinkSync(picture.src);
 
     res.json({msg:"foto excluida com sucesso"})
   } catch (error) {
-    res.status(500).json({message: "Erro ao excluir imagem."})
+   
+    console.log(error);
+    res.status(500).json({message: "Erro ao excluir imagem: "})
   }
 }
