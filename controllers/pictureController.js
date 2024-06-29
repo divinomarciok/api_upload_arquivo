@@ -5,7 +5,7 @@ exports.create = async (req,res) => {
   try {
 
     const {name} = req.body;
-    const file = req.file;
+    const file = req.file.path;
     const picture = new Picture({
         name,
         src: file.path,
@@ -17,7 +17,7 @@ exports.create = async (req,res) => {
     res.json({picture, msg:"Imagem salva com sucesso"});
 
   } catch (error) {
-
+    console.log(error)
     res.status(500).json({message:"Erro ao salvar imagem"})
     
   }
